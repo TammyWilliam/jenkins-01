@@ -27,5 +27,14 @@ pipeline {
   -Dsonar.login=sqp_15131ba60b4a38192f8812c095af68c0c624e1e2"
       }
     }
+    stage('5-deploy-to-tomcat'){
+      steps{
+        sshagent(['tomcat']){
+          sh """
+          scp -o StrictHostKeyChecking=no ~/workspace/maven/MavenEnterpriseApp.war ubuntu@3.144.193.205:/opt/tomcat/apache-tomcat-9.0.88/webapps
+          """
+        }
+      }
+    }
   }
 }
